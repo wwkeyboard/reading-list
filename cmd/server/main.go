@@ -15,6 +15,8 @@ func main() {
 
 	r.GET("/health", healthCheck)
 	r.GET("/", listReadings)
+	r.POST("/", createPiece)
+
 	r.Run()
 }
 
@@ -26,4 +28,14 @@ func healthCheck(c *gin.Context) {
 
 func listReadings(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{})
+}
+
+func createPiece(c *gin.Context) {
+	name := c.PostForm("name")
+	url := c.PostForm("url")
+
+	reading.AddPiece(reading.Piece{
+		Name: name,
+		URL:  url,
+	})
 }
