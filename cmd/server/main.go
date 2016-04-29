@@ -1,10 +1,31 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/wwkeyboard/reading-list/reading"
 )
+
+var (
+	db *reading.Database
+)
+
+func init() {
+	newDB, err := reading.NewDatabase("reading.sql")
+	db = newDB
+	if err != nil {
+		log.Panicf("Couldn't load DB %+v", err)
+	}
+
+	err = db.EnsureBucket()
+	if err != nil {
+		log.Panicf("Couldn't create default bucket %+v", err)
+	}
+
+}
 
 func main() {
 	r := gin.Default()
@@ -34,7 +55,7 @@ func createPiece(c *gin.Context) {
 	name := c.PostForm("name")
 	url := c.PostForm("url")
 
-	reading.AddPiece(reading.Piece{
+	db.AddPiece(&reading.Piece{
 		Name: name,
 		URL:  url,
 	})
