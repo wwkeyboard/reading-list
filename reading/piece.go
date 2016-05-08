@@ -80,7 +80,7 @@ func (d *Database) AddPiece(piece *Piece) error {
 // EnsureBucket returns true if the bucket exists
 func (d *Database) EnsureBucket() error {
 	err := d.db.Update(func(tx *bolt.Tx) error {
-		_, err := tx.CreateBucket([]byte(defaultBucket))
+		_, err := tx.CreateBucketIfNotExists([]byte(defaultBucket))
 		return err
 	})
 	return err
