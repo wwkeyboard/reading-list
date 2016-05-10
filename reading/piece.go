@@ -37,7 +37,7 @@ func NewDatabase(filename string) (*Database, error) {
 var defaultBucket = []byte("default-bucket")
 
 // List returns a all of the pieces for that bucket
-func (d *Database) List(bucket string) ([]Piece, error) {
+func (d *Database) List() ([]Piece, error) {
 	var pieces []Piece
 	err := d.db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(defaultBucket)

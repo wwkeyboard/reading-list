@@ -48,7 +48,9 @@ func healthCheck(c *gin.Context) {
 }
 
 func listReadings(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{})
+        ps, _ := db.List()
+	
+	c.JSON(http.StatusOK, gin.H{"pieces": ps})
 }
 
 func createPiece(c *gin.Context) {
