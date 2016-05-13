@@ -48,8 +48,8 @@ func healthCheck(c *gin.Context) {
 }
 
 func listReadings(c *gin.Context) {
-        ps, _ := db.List()
-	
+	ps, _ := db.List()
+
 	c.JSON(http.StatusOK, gin.H{"pieces": ps})
 }
 
